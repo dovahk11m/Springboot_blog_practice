@@ -6,17 +6,28 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
+//@Table 실제 데이터베이스 테이블 이름을 지정할 때 사용한다.
 @Table(name = "board_tb")
+/* @Entity JPA가 이 클래스를
+데이터베이스 테이블과 매핑하는 객체로 인식한다.
+즉, @Entity 어노테이션이 있어야 JPA가 이 객체를 관리한다
+ */
 @Entity
 public class Board {
 
+    //@Id 이 필드가 기본키 PK 임을 나타낸다.
     @Id
+    /* PK를 설정하는 방식
+    데이터베이스의 기본 전략을 사용한다.
+    MySql 기준으로는 Auto_Increment 다.
+     */
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
+    // 별도 어노테이션이 없다면 필드명이 곧 컬럼명이 된다.
     private String title;
     private String content;
     private String username;
-    private Timestamp createdAt;
+    private Timestamp createdAt; // created_at 스네이크 케이스로 자동 변환
 
 }
