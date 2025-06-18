@@ -1,0 +1,13 @@
+server:
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+  port: 8080
+
+# 로그 레벨의 개념
+# ERROR (가장 심각한 로그) > WARNING > INFO > DEBUG > STACKTRACE
+logging:
+  level:
+    root: INFO # 모든 라이브러리는 INFO 레벨 이상만 로깅한다
+    com.tenco: DEBUG # 내 프로젝트는 DEBUG 이상 출력
