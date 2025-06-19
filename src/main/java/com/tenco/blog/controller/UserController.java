@@ -6,30 +6,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UserController {
 
-    //요청돼 오는 주소 /join-form
+    // 회원가입 화면 요청
     @GetMapping("/join-form")
     public String joinForm() {
         return "user/join-form";
     }
 
-    //반환값이 뷰 이름이 됨 (뷰 리졸버가 실제 파일 경로를 찾아 감)
+    // Login 화면 요청
     @GetMapping("/login-form")
     public String loginForm() {
+        // 반환값이 뷰(파일)이름이 됨(뷰리졸버가 실제파일 경로를 찾아감)
         return "user/login-form";
     }
 
-    //http://localhost:8080/user/update-form
+    // update 화면 요청
+
     @GetMapping("/user/update-form")
     public String updateForm() {
         return "user/update-form";
     }
 
-    /* redirect: "스프링에서 접두사를 사용하면 다른 URL로 리다이렉트 된다
-    즉, 리다이렉트한다는 것은 뷰를 렌더링하지 않고
-    브라우저가 재요청을 하게끔 유도하는 것이다
-     */
     @GetMapping("/logout")
     public String logout() {
+        // "redirect : " 스프링에서 접두사를 사용하면 다른 URL 로 리다이렉트됨
+        // 즉 리다이렉트 한다는것은 뷰를 렌더링하지않고 브라우저가 재요청
         return "redirect:/";
     }
+
 }
