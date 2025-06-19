@@ -20,6 +20,36 @@ public class BoardController {
         this.boardNativeRepository = boardNativeRepository;
     }
 
+    @PostMapping("/board/{id}/update-form")
+    public String update(@PathVariable(name = "id") Long id,
+                             @RequestParam(name = "title") String title,
+                             @RequestParam(name = "content") String content,
+                             @RequestParam(name = "username") String username,
+                             HttpServletRequest request) {
+
+        boardNativeRepository.updateById(id, title, content, username);
+
+        // PRG 패턴 적용
+        // 수정 완료 직후
+        // 해당 게시글 상세보기 페이지로 리다이렉트 redirect
+        return "redirect:/board/" +id;
+    }
+
+
+    //게시글 수정 화면 요청.. GET방식으로
+    // board/3/update-form
+    @GetMapping("/board/{id}/update-form")
+    public String updateForm(@PathVariable(name = "id") Long id,
+                             HttpServletRequest request) {
+        //사용자에게 보여주면 틀(request)에 담아서 보여줘야 한다
+
+        Board board = boardNativeRepository.findById(id);
+
+        request.setAttribute("board",board);
+
+        return "board/update-form";
+    }
+
 
     @PostMapping("/board/{id}/delete")
     public String delete(@PathVariable(name = "id") Long id) {
@@ -39,23 +69,18 @@ public class BoardController {
     }
 
 
-
-
-
     // board/1
     // *상세보기 화면 요청
     @GetMapping("/board/{id}")
-    public String detail(@PathVariable(name="id") Long id,
+    public String detail(@PathVariable(name = "id") Long id,
                          HttpServletRequest request) {
         // URL 에서 받은 id 값을 사용해서 특정 게시글 상세보기 조회
         // 실제로는 이 id 값으로 DB에 있는 게시글 조회 하고 mustache 파일로 데이터를 내려주어야 함(Model)
         Board board = boardNativeRepository.findById(id);
-        request.setAttribute("board",board);
+        request.setAttribute("board", board);
 
         return "board/detail";
     }
-
-
 
 
     @PostMapping("/board/save")
@@ -69,7 +94,7 @@ public class BoardController {
         System.out.println("title = " + title);
         System.out.println("content = " + content);
 
-        boardNativeRepository.save(username,title,content);
+        boardNativeRepository.save(username, title, content);
 
         return "redirect:/";
     }
