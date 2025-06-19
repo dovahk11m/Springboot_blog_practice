@@ -1,6 +1,7 @@
 package com.tenco.blog.repository;
 
 import com.tenco.blog.model.Board;
+import jakarta.persistence.Query;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +40,26 @@ public class BoardNativeRepositoryTest {
         Assertions.assertThat(board).isNotNull();
     }
 
+    @Test
+    public void deleteById_test() {
 
+        //given
+        Long id = 4L;
 
+        //when
+        br.deleteById(id);
 
+        //then
+        // 정상적으로 삭제됐다면 조회했을 때 row가 3개만 있어야 함
+        List<Board> boardList = br.findAll();
+        Assertions.assertThat(boardList.size()).isEqualTo(3);
 
-
-
-
+    }
 
 
     @Test
     public void findAll_test() {
+
         // given - when - then
         // Given : Preparation of the test
         // 게시글 목록 조회 정상 작동하는지 확인 -> data.sql 파일에 데이터 이미 준비 완료

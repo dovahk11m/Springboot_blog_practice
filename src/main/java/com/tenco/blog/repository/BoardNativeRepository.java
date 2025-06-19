@@ -21,9 +21,30 @@ public class BoardNativeRepository {
     // 데이터 베이스와의 모든 작업을 담당
     private EntityManager em;
 
+    //생성자 ! 위에 둘 것
     public BoardNativeRepository(EntityManager em) {
         this.em = em;
     }
+
+    //특정 게시글을 삭제하는 메서드
+    @Transactional
+    public void deleteById(Long id) {
+
+        Query query = em.createNativeQuery("delete from board_tb where id = ? ");
+        query.setParameter(1, id);
+
+        //
+        query.executeUpdate();
+    }
+
+
+
+
+
+
+
+
+
 
     public Board findById(Long id) {
 

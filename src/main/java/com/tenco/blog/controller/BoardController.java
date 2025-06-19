@@ -15,9 +15,32 @@ import java.util.List;
 public class BoardController {
 
     private BoardNativeRepository boardNativeRepository;
+
     public BoardController(BoardNativeRepository boardNativeRepository) {
         this.boardNativeRepository = boardNativeRepository;
     }
+
+
+    @PostMapping("/board/{id}/delete")
+    public String delete(@PathVariable(name = "id") Long id) {
+        //버퍼드리더로 받기 때문에 문자열로 받는다
+
+        /* 클라이언트 -> 삭제 -> 응답(리다이렉트) -> 클라 -> 응답
+
+        PRG 패턴 (Post-Redirect-Get)
+        삭제 후 메인페이지로 리다이렉트 해야 중복 삭제를 방지할 수 있다.
+        새로고침을 해도 중복삭제가 안된다.
+        */
+
+        boardNativeRepository.deleteById(id);
+
+        return "redirect:/";
+
+    }
+
+
+
+
 
     // board/1
     // *상세보기 화면 요청
